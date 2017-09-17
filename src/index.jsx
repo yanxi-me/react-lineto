@@ -1,4 +1,5 @@
-import React, { PropTypes, Component, PureComponent } from 'react';
+import React, { Component, PureComponent } from 'react';
+import PropTypes from 'prop-types'
 
 const defaultAnchor = { x: 0.5, y: 0.5 };
 
