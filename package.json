@@ -1,6 +1,6 @@
 {
   "name": "react-lineto-yanxi",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "author": "Kevin DeLoach <kdeloach@gmail.com>",
   "license": "MIT",
   "main": "dist/react-lineto.js",

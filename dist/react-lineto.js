@@ -657,7 +657,7 @@ var LineTo = function (_Component) {
     }, {
         key: 'findElement',
         value: function findElement(className) {
-            return document.getElementsByClassName(className)[0];
+            return document.getElementById(className) || document.getElementsByClassName(className)[0];
         }
     }, {
         key: 'detect',

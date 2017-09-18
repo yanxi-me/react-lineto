@@ -92,7 +92,7 @@ export default class LineTo extends Component {
     }
 
     findElement(className) {
-        return document.getElementsByClassName(className)[0];
+        return document.getElementById(className) || document.getElementsByClassName(className)[0];
     }
 
     detect() {
