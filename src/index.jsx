@@ -136,6 +136,7 @@ LineTo.propTypes = Object.assign({}, {
     fromAnchor: PropTypes.string,
     toAnchor: PropTypes.string,
     delay: PropTypes.number,
+    withArrow: PropTypes.bool,
 }, optionalStyleProps);
 
 export class Line extends PureComponent {
@@ -150,7 +151,7 @@ export class Line extends PureComponent {
     }
 
     render() {
-        const { x0, y0, x1, y1 } = this.props;
+        const { x0, y0, x1, y1, withArrow } = this.props;
 
         const dy = y1 - y0;
         const dx = x1 - x0;
@@ -176,15 +177,57 @@ export class Line extends PureComponent {
             style: style,
         }
 
+        let arrow1Props = null;
+        let arrow2Props = null;
+        if (withArrow) {
+          const angle1 = angle + 180 + 30
+          const angle2 = angle + 180 - 30
+            const lengthArrow = 20;
+            arrow1Props = {
+              className: this.props.className,
+              style: {
+                position: 'absolute',
+                top: `${y1}px`,
+                left: `${x1}px`,
+                width: `${lengthArrow}px`,
+                height: '1px',
+                borderTop: this.props.border || '1px solid #f00',
+                zIndex: this.props.zIndex || '1',
+                transform: `rotate(${angle1}deg) translateY(-2px)`,
+                // Rotate around (x0, y0)
+                transformOrigin: '0 0',
+              }
+            }
+            arrow2Props =  {
+              className: this.props.className,
+              style: {
+                position: 'absolute',
+                top: `${y1}px`,
+                left: `${x1}px`,
+                width: `${lengthArrow}px`,
+                height: '1px',
+                borderTop: this.props.border || '1px solid #f00',
+                zIndex: this.props.zIndex || '1',
+                transform: `rotate(${angle2}deg) translateY(-3px)`,
+                // Rotate around (x0, y0)
+                transformOrigin: '0 0'
+              }
+            }
+        }
+
         // We need a wrapper element to prevent an exception when then
         // React component is removed. This is because we manually
         // move the rendered DOM element after creation.
         return (
             <div className="react-lineto-placeholder">
+              <div ref={(el) => { this.el = el; }}>
                 <div
-                    ref={(el) => { this.el = el; }}
+
                     {...props}
                 ></div>
+                {arrow1Props && <div {...arrow1Props} />}
+                {arrow2Props && <div {...arrow2Props} />}
+                </div>
             </div>
         );
     }
@@ -195,4 +238,5 @@ Line.propTypes = Object.assign({}, {
     y0: PropTypes.number.isRequired,
     x1: PropTypes.number.isRequired,
     y1: PropTypes.number.isRequired,
+    withArrow: PropTypes.bool,
 }, optionalStyleProps);

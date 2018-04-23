@@ -139,6 +139,7 @@ class RotationTest extends Component {
                 <LineTo
                     from="item-G"
                     to="item-H"
+                    withArrow
                     border="2px solid blue"
                     className="line-XYZ" />
             </fieldset>
@@ -173,6 +174,7 @@ class HoverTest extends Component {
             <LineTo
                 from={from}
                 to={to}
+                withArrow
                 fromAnchor="middle right"
                 toAnchor="middle left"
                 border="3px solid #f00"
@@ -187,7 +189,7 @@ class HoverTest extends Component {
                     left="10px"
                     color="#00f"
                     onMouseOver={() => this.drawLine('item-A', 'item-F')}
-                    onMouseOut={this.clearLine}
+                    // onMouseOut={this.clearLine}
                     >A</Block>
                 <Block
                     className="item-B"
