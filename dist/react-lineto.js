@@ -709,7 +709,8 @@ LineTo.propTypes = Object.assign({}, {
     to: _propTypes2.default.string.isRequired,
     fromAnchor: _propTypes2.default.string,
     toAnchor: _propTypes2.default.string,
-    delay: _propTypes2.default.number
+    delay: _propTypes2.default.number,
+    withArrow: _propTypes2.default.bool
 }, optionalStyleProps);
 
 var Line = exports.Line = function (_PureComponent) {
@@ -742,7 +743,8 @@ var Line = exports.Line = function (_PureComponent) {
                 x0 = _props2.x0,
                 y0 = _props2.y0,
                 x1 = _props2.x1,
-                y1 = _props2.y1;
+                y1 = _props2.y1,
+                withArrow = _props2.withArrow;
 
 
             var dy = y1 - y0;
@@ -767,18 +769,61 @@ var Line = exports.Line = function (_PureComponent) {
             var props = {
                 className: this.props.className,
                 style: style
+            };
 
-                // We need a wrapper element to prevent an exception when then
-                // React component is removed. This is because we manually
-                // move the rendered DOM element after creation.
-            };return _react2.default.createElement(
+            var arrow1Props = null;
+            var arrow2Props = null;
+            if (withArrow) {
+                var angle1 = angle + 180 + 30;
+                var angle2 = angle + 180 - 30;
+                var lengthArrow = 20;
+                arrow1Props = {
+                    className: this.props.className,
+                    style: {
+                        position: 'absolute',
+                        top: y1 + 'px',
+                        left: x1 + 'px',
+                        width: lengthArrow + 'px',
+                        height: '1px',
+                        borderTop: this.props.border || '1px solid #f00',
+                        zIndex: this.props.zIndex || '1',
+                        transform: 'rotate(' + angle1 + 'deg) translateY(-2px)',
+                        // Rotate around (x0, y0)
+                        transformOrigin: '0 0'
+                    }
+                };
+                arrow2Props = {
+                    className: this.props.className,
+                    style: {
+                        position: 'absolute',
+                        top: y1 + 'px',
+                        left: x1 + 'px',
+                        width: lengthArrow + 'px',
+                        height: '1px',
+                        borderTop: this.props.border || '1px solid #f00',
+                        zIndex: this.props.zIndex || '1',
+                        transform: 'rotate(' + angle2 + 'deg) translateY(-3px)',
+                        // Rotate around (x0, y0)
+                        transformOrigin: '0 0'
+                    }
+                };
+            }
+
+            // We need a wrapper element to prevent an exception when then
+            // React component is removed. This is because we manually
+            // move the rendered DOM element after creation.
+            return _react2.default.createElement(
                 'div',
                 { className: 'react-lineto-placeholder' },
-                _react2.default.createElement('div', _extends({
-                    ref: function ref(el) {
-                        _this4.el = el;
-                    }
-                }, props))
+                _react2.default.createElement(
+                    'div',
+                    { ref: function ref(el) {
+                            _this4.el = el;
+                        } },
+                    _react2.default.createElement('div', props),
+                    arrow1Props && _react2.default.createElement('div', arrow1Props),
+                    arrow2Props && _react2.default.createElement('div', arrow2Props)
+                )
             );
         }
     }]);
@@ -790,7 +835,8 @@ Line.propTypes = Object.assign({}, {
     x0: _propTypes2.default.number.isRequired,
     y0: _propTypes2.default.number.isRequired,
     x1: _propTypes2.default.number.isRequired,
-    y1: _propTypes2.default.number.isRequired
+    y1: _propTypes2.default.number.isRequired,
+    withArrow: _propTypes2.default.bool
 }, optionalStyleProps);
 
 /***/ }),
